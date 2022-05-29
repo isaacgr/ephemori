@@ -1,0 +1,67 @@
+/*
+===============================
+Grid
+===============================
+*/
+
+.MuiPaper-root.grid-paper {
+  padding: 1rem;
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+#life-grid,
+#life-grid tr,
+#life-grid td {
+  border: 1px solid $grid-border-dark;
+}
+
+#life-grid {
+  text-align: left;
+  margin: 0 auto;
+  font: 300 15px "Lato", "Open Sans", "Helvetica Nue", sans-serif;
+  letter-spacing: 2px;
+  margin: 5px auto 15px auto;
+}
+
+#life-grid td {
+  padding: 0.3rem 0.3rem;
+}
+
+@media screen and (max-width: 774px) {
+  .container {
+    width: 100%;
+  }
+  #life-grid td {
+    padding: 0.25rem 0.25rem;
+  }
+  #life-grid,
+  #life-grid tr,
+  #life-grid td {
+    border: 1px solid $grid-border-dark;
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .container {
+    width: 100%;
+  }
+  #life-grid td {
+    padding: 0.18rem 0.18rem;
+  }
+}
+
+@media screen and (max-width: 455px) {
+  .container {
+    width: 100%;
+  }
+  #life-grid td {
+    padding: 0.15rem 0.15rem;
+  }
+}
+
+.fill {
+  background-color: $grid-fill-dark;
+}

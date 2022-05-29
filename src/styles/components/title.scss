@@ -1,0 +1,25 @@
+/*
+===============================
+Title
+===============================
+*/
+
+.title {
+  color: $title-text;
+  text-align: center;
+  font: 300 40px "Roboto", "Open Sans", "Helvetica Nue", sans-serif;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.sub-title {
+  color: $title-text;
+  text-align: center;
+  font: 300 15px "Roboto", "Open Sans", "Helvetica Nue", sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 5px auto 15px auto;
+}

@@ -1,0 +1,17 @@
+/*
+===============================
+User Info page
+===============================
+*/
+
+.MuiPaper-root.user-info {
+  max-width: 35%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 774px) {
+  .MuiPaper-root.user-info {
+    max-width: 100%;
+  }
+}

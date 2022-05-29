@@ -1,0 +1,68 @@
+/*
+===============================
+Legend
+===============================
+*/
+
+#age-stats {
+  text-align: center;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.legend-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 35rem;
+}
+
+#legend {
+  margin: 1rem auto;
+  padding: 1rem;
+  &.settings {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .legend-container {
+    position: relative;
+    right: 0;
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 774px) {
+  .container {
+    width: 100%;
+  }
+
+  #legend {
+    td {
+      padding: 0.25rem 0.25rem;
+    }
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .container {
+    width: 100%;
+  }
+  #legend {
+    td {
+      padding: 0.18rem 0.18rem;
+    }
+  }
+}
+
+@media screen and (max-width: 455px) {
+  .container {
+    width: 100%;
+  }
+  #legend {
+    td {
+      padding: 0.15rem 0.15rem;
+    }
+  }
+}
