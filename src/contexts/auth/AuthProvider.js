@@ -19,12 +19,12 @@ export const AuthProvider = ({ children }) => {
   });
 
   useEffect(async () => {
-    setLoading(true);
     let isMounted = true;
     (async () => {
       try {
         const res = await auth.checkAuthenticated();
         if (isMounted && res.user) {
+          setLoading(true);
           setCurrentUser({
             ...res.user
           });
