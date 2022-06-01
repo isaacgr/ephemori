@@ -12,11 +12,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth/AuthProvider";
+import logo from "../images/profile.png";
 
-const logo = "Life Plot";
 const pages = [
   { name: "Settings", link: "/settings" },
-  { name: "My Life Plot", link: "/my-grid" }
+  { name: "My Points", link: "/my-grid" }
 ];
 const settings = [{ name: "Logout", action: "logout" }];
 
@@ -58,7 +58,7 @@ export default () => {
               component="div"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             >
-              {logo}
+              <img alt="logo" className="menu__logo" src={logo} />
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -105,7 +105,7 @@ export default () => {
               component="div"
               sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
             >
-              {logo}
+              <img alt="logo" className="menu__logo" src={logo} />
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (

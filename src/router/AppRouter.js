@@ -11,9 +11,12 @@ import { ThemeProvider } from "@mui/material/styles";
 import { getDesignTokens } from "../theme/Theme";
 import { createTheme } from "@mui/material/styles";
 import PrivateRoute from "./PrivateRoute";
-import Login from "../pages/Login";
+import ContextRoute from "./ContextRoute";
+import CssBaseline from "@mui/material/CssBaseline";
 const history = createBrowserHistory();
 
+import Login from "../pages/Login";
+import LandingPage from "../pages/LandingPage";
 import SettingsPage from "../pages/SettingsPage";
 import MainPage from "../pages/MainPage";
 import NotFound from "../pages/NotFound";
@@ -27,34 +30,73 @@ const AppRouter = () => {
 
   return (
     <ThemeProvider theme={createTheme(getDesignTokens(theme))}>
+      <CssBaseline enableColorScheme />
       <Router history={history}>
-        <AuthProvider>
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route index exact path="/" element={<Navigate to="/my-grid" />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/password-reset" element={<PasswordReset />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route
-              path="/settings"
-              element={
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route index exact path="/" element={<LandingPage />} />
+          <Route
+            exact
+            path="/login"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
+                <Login />
+              </ContextRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
+                <Signup />
+              </ContextRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
+                <ForgotPassword />
+              </ContextRoute>
+            }
+          />
+          <Route
+            path="/password-reset"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
+                <PasswordReset />
+              </ContextRoute>
+            }
+          />
+          <Route
+            path="/verify-email"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
+                <VerifyEmail />
+              </ContextRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
                 <PrivateRoute>
                   <SettingsPage />
                 </PrivateRoute>
-              }
-            />
-            <Route
-              path="/my-grid"
-              element={
+              </ContextRoute>
+            }
+          />
+          <Route
+            path="/my-grid"
+            element={
+              <ContextRoute contextProvider={AuthProvider}>
                 <PrivateRoute>
                   <MainPage />
                 </PrivateRoute>
-              }
-            />
-          </Routes>
-        </AuthProvider>
+              </ContextRoute>
+            }
+          />
+        </Routes>
       </Router>
     </ThemeProvider>
   );

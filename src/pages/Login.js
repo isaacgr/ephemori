@@ -21,7 +21,7 @@ const Login = () => {
   useEffect(() => {
     if (currentUser) {
       if (currentUser.isUserSet) {
-        navigate("/");
+        navigate("/my-grid");
       } else {
         navigate("/settings");
       }
@@ -35,7 +35,7 @@ const Login = () => {
       setLoading(true);
       const response = await login(emailRef, passwordRef);
       if (response.user.isUserSet) {
-        navigate("/");
+        navigate("/my-grid");
       } else {
         navigate("/settings");
       }

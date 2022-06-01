@@ -14,7 +14,7 @@ module.exports = function (server = process.env.API_SERVER_URL) {
         filename: "main.[contenthash].css"
       }),
       new HtmlWebpackPlugin({
-        title: "Life Plot",
+        title: "ephemori",
         template: "indexTemplate.html"
       }),
       new webpack.DefinePlugin({
@@ -60,6 +60,14 @@ module.exports = function (server = process.env.API_SERVER_URL) {
           generator: {
             filename: "./fonts/[name][ext]"
           }
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: "file-loader"
+            }
+          ]
         }
       ]
     },
