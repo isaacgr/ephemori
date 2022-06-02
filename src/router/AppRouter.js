@@ -19,7 +19,7 @@ import Login from "../pages/Login";
 import LandingPage from "../pages/LandingPage";
 import SettingsPage from "../pages/SettingsPage";
 import MainPage from "../pages/MainPage";
-import NotFound from "../pages/NotFound";
+import NotFoundPage from "../pages/NotFoundPage";
 import Signup from "../pages/Signup";
 import ForgotPassword from "../pages/ForgotPassword";
 import PasswordReset from "../pages/PasswordReset";
@@ -33,7 +33,7 @@ const AppRouter = () => {
       <CssBaseline enableColorScheme />
       <Router history={history}>
         <Routes>
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route index exact path="/" element={<LandingPage />} />
           <Route
             exact
