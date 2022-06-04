@@ -93,19 +93,24 @@ module.exports = (db) => {
     }
   );
 
-  router.get(ROUTE_PATHS.DATES.MAX_DATES, async (req, res) => {
-    try {
-      const result = ImportantDatesService.MAX_IMPORTANT_DATES;
-      res.status(200).json({
-        success: true,
-        maxDates: result
-      });
-    } catch (e) {
-      res.status(400).json({
-        errorMessage: `${e.code} : ${e.message}`
-      });
+  router.get(
+    ROUTE_PATHS.DATES.MAX_DATES,
+    (...args) => authService.isAuthenticated(...args),
+    async (req, res) => {
+      try {
+        const { tier } = req.session.user;
+        const dates = await ImportantDatesService.MAX_IMPORTANT_DATES[tier];
+        res.status(200).json({
+          success: true,
+          maxDates: dates
+        });
+      } catch (e) {
+        res.status(400).json({
+          errorMessage: `${e.code} : ${e.message}`
+        });
+      }
     }
-  });
+  );
 
   return router;
 };

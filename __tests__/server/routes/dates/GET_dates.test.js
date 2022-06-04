@@ -39,19 +39,6 @@ const importantDates = [
 const ImportantDatesService = require("../../../../server/db/ImportantDates");
 const AuthService = require("../../../../server/middleware/auth");
 
-describe(`GET ${ROUTE_PATHS.DATES.MAX_DATES}`, () => {
-  it("should return the max dates defined by the ImportantDatesService", async () => {
-    const response = await request(app).get(
-      `/api/${apiVersion}${ROUTE_PATHS.DATES.MAX_DATES}`
-    );
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({
-      success: true,
-      maxDates: ImportantDatesService.MAX_IMPORTANT_DATES
-    });
-  });
-});
-
 describe(`GET ${ROUTE_PATHS.DATES.GET_DATES}`, () => {
   let userId;
   beforeAll(async () => {

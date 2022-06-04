@@ -1,4 +1,5 @@
 const isValidDate = require("../../utils/isValidDate");
+const { USER_TIERS } = require("../types");
 const { DatabaseError, DateError } = require("../../utils/errors");
 const {
   getImportantDatesCommand,
@@ -10,7 +11,13 @@ const {
 
 class ImportantDatesController {
   static COLOR_PATTERN = /^#([0-9a-f]{3}){1,2}$/i;
-  static MAX_IMPORTANT_DATES = 80;
+  /**
+   * Max Dates depend on tier
+   */
+  static MAX_IMPORTANT_DATES = {
+    [USER_TIERS.basic]: 25,
+    [USER_TIERS.premium]: 100
+  };
   constructor(database) {
     this.db = database;
   }
@@ -28,15 +35,19 @@ ImportantDatesController.prototype.checkImportantDatesCount = async function (
         if (err) {
           reject(new DatabaseError(err.message));
         }
-        /**
-         * TODO: Handle empty rows
-         */
+        if (res.rows.length === 0) {
+          // user has no important dates
+          return resolve(0);
+        }
         if (
-          parseInt(res.rows[0].total) >= _this.constructor.MAX_IMPORTANT_DATES
+          parseInt(res.rows[0].total) >=
+          _this.constructor.MAX_IMPORTANT_DATES[res.rows[0].tier]
         ) {
-          reject(
+          return reject(
             new RangeError(
-              `Maximum number of important dates allowed per user is ${_this.constructor.MAX_IMPORTANT_DATES}.`
+              `Maximum number of important dates allowed for user is ${
+                _this.constructor.MAX_IMPORTANT_DATES[res.rows[0].tier]
+              }.`
             )
           );
         }

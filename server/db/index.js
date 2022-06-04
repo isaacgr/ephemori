@@ -103,6 +103,7 @@ module.exports = (applicationDatabaseName) => {
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
+            tier INTEGER NOT NULL DEFAULT 1,
             display_name TEXT,
             date_of_birth TEXT,
             is_user_set BOOLEAN DEFAULT false NOT NULL CHECK (is_user_set IN (false, true)),

@@ -9,6 +9,7 @@ const {
   AlreadyVerifiedError
 } = require("../../server/utils/errors");
 const { compareHash } = require("../../server/utils/hashing");
+const { USER_TIERS } = require("../../server/db/types");
 
 const userController = new UserController(db);
 
@@ -124,7 +125,8 @@ describe("DATABASE UserService", () => {
           email: user.credentials.email,
           displayName: null,
           dateOfBirth: null,
-          isUserSet: false
+          isUserSet: false,
+          tier: USER_TIERS.basic
         });
       });
       it("should raise an error if email does not exist", async () => {
@@ -160,7 +162,8 @@ describe("DATABASE UserService", () => {
           email: user.credentials.email,
           displayName: null,
           dateOfBirth: null,
-          isUserSet: false
+          isUserSet: false,
+          tier: USER_TIERS.basic
         });
       });
       it("should raise an error if the email does not exist", async () => {

@@ -21,9 +21,11 @@ AND id = $2
 `;
 
 exports.getImportantDatesCountCommand = `
-SELECT COUNT(*) as total
-FROM important_dates
-WHERE user_id = $1
+SELECT COUNT(l.user_id) as total,
+  r.tier FROM important_dates as l
+INNER JOIN users as r on r.id = l.user_id
+WHERE r.id = $1
+GROUP BY r.tier
 `;
 
 exports.removeImportantDatesCommand = `

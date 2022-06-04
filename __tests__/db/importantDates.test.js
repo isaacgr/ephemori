@@ -2,6 +2,7 @@ const { db, Database, createDatabase } = require("../db");
 const database = new Database(db);
 const ImportantDatesController = require("../../server/db/ImportantDates");
 const { DatabaseError, DateError } = require("../../server/utils/errors");
+const { USER_TIERS } = require("../../server/db/types");
 
 const importantDatesController = new ImportantDatesController(db);
 
@@ -9,7 +10,8 @@ const user = {
   credentials: {
     email: "testsuite@gmail.com",
     password: "password"
-  }
+  },
+  tier: USER_TIERS.basic
 };
 
 const importantDates = [
@@ -47,8 +49,8 @@ describe("DATABASE ImportantDatesService", () => {
       const result = await database.createTables();
       console.log(result);
       const res = await db.query(
-        "INSERT INTO users(email, password) VALUES($1, $2) RETURNING id",
-        [user.credentials.email, user.credentials.password]
+        "INSERT INTO users(email, password, tier) VALUES($1, $2, $3) RETURNING id",
+        [user.credentials.email, user.credentials.password, user.tier]
       );
       userId = res.rows[0].id;
     } catch (e) {
@@ -189,7 +191,7 @@ describe("DATABASE ImportantDatesService", () => {
       const dates = [];
       for (
         let i = 0;
-        i < ImportantDatesController.MAX_IMPORTANT_DATES - 1;
+        i < ImportantDatesController.MAX_IMPORTANT_DATES[user.tier] - 1;
         i++
       ) {
         dates.push(date);
@@ -200,7 +202,9 @@ describe("DATABASE ImportantDatesService", () => {
       const total = await importantDatesController.checkImportantDatesCount(
         userId
       );
-      expect(total).toBe(79);
+      expect(total).toBe(
+        ImportantDatesController.MAX_IMPORTANT_DATES[user.tier] - 1
+      );
     });
     it("should throw an error if user has max number of dates defined", async () => {
       const date = {
@@ -209,7 +213,11 @@ describe("DATABASE ImportantDatesService", () => {
         color: "#000000"
       };
       const dates = [];
-      for (let i = 0; i < ImportantDatesController.MAX_IMPORTANT_DATES; i++) {
+      for (
+        let i = 0;
+        i < ImportantDatesController.MAX_IMPORTANT_DATES[user.tier];
+        i++
+      ) {
         dates.push(date);
       }
       await Promise.all(
@@ -229,7 +237,7 @@ describe("DATABASE ImportantDatesService", () => {
       const dates = [];
       for (
         let i = 0;
-        i < ImportantDatesController.MAX_IMPORTANT_DATES + 1;
+        i < ImportantDatesController.MAX_IMPORTANT_DATES[user.tier] + 1;
         i++
       ) {
         dates.push(date);
@@ -241,6 +249,12 @@ describe("DATABASE ImportantDatesService", () => {
         await importantDatesController.checkImportantDatesCount(userId);
       };
       await expect(e()).rejects.toThrow(RangeError);
+    });
+    it("should return 0 if user has no dates defined", async () => {
+      const res = await importantDatesController.checkImportantDatesCount(
+        userId
+      );
+      expect(res).toBe(0);
     });
   });
   describe("get dates", () => {

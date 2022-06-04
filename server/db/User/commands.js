@@ -29,7 +29,8 @@ SELECT
   email,
   display_name,
   date_of_birth,
-  is_user_set
+  is_user_set,
+  tier
 FROM users
 WHERE email = $1
 `;

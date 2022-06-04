@@ -6,6 +6,7 @@ const database = new Database(db);
 const { app, sessionStore } = makeApp(db);
 const { toBeOneOf } = require("jest-extended");
 const { hashAndSalt } = require("../../../../server/utils/hashing");
+const { USER_TIERS } = require("../../../../server/db/types");
 
 expect.extend({ toBeOneOf });
 
@@ -14,7 +15,8 @@ const user = {
   email: "testsuite@gmail.com",
   password: "test",
   isUserSet: true,
-  dateOfBirth: new Date().toISOString().split("T")[0]
+  dateOfBirth: new Date().toISOString().split("T")[0],
+  tier: USER_TIERS.basic
 };
 
 const importantDates = [
@@ -188,7 +190,11 @@ describe(`POST ${ROUTE_PATHS.DATES.ADD_DATES}`, () => {
           next();
         });
       const maxdates = [];
-      for (let i = 0; i < ImportantDatesService.MAX_IMPORTANT_DATES; i++) {
+      for (
+        let i = 0;
+        i < ImportantDatesService.MAX_IMPORTANT_DATES[user.tier];
+        i++
+      ) {
         maxdates.push(importantDates[0]);
       }
       await request(app)
@@ -199,7 +205,9 @@ describe(`POST ${ROUTE_PATHS.DATES.ADD_DATES}`, () => {
         .send({ dates: importantDates });
       expect(response.status).toBe(400);
       expect(response.body.errorMessage).toContain(
-        "Maximum number of important dates allowed per user is"
+        `Maximum number of important dates allowed for user is ${
+          ImportantDatesService.MAX_IMPORTANT_DATES[user.tier]
+        }`
       );
     });
   });

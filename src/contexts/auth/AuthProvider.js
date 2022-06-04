@@ -22,14 +22,16 @@ export const AuthProvider = ({ children }) => {
     let isMounted = true;
     (async () => {
       try {
-        const res = await auth.checkAuthenticated();
-        if (isMounted && res.user) {
+        if (isMounted) {
           setLoading(true);
-          setCurrentUser({
-            ...res.user
-          });
-        } else {
-          console.log("No user returned from checkAuthenticated");
+          const res = await auth.checkAuthenticated();
+          if (res.user) {
+            setCurrentUser({
+              ...res.user
+            });
+          } else {
+            console.log("No user returned from checkAuthenticated");
+          }
         }
       } catch (e) {
         if (isMounted) {
