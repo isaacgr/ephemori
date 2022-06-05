@@ -12,7 +12,9 @@ describe("UTIL dates", () => {
     it("should return the YYYY-MM-dd representation of a date", () => {
       const date = new Date();
       const dateString = getDateString(date);
-      expect(dateString).toBe(date.toISOString().split("T")[0]);
+      const offset = date.getTimezoneOffset();
+      const newDate = new Date(date.getTime() - offset * 60 * 1000);
+      expect(dateString).toBe(newDate.toISOString().split("T")[0]);
     });
   });
   describe("Date.prototype.addDays", () => {
