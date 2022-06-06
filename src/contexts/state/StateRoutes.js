@@ -33,6 +33,10 @@ export class StateHandler {
     return await performApiRequest(this, HttpMethod.GET, Endpoint.MAX_DATES);
   }
 
+  async getUserTier() {
+    return await performApiRequest(this, HttpMethod.GET, Endpoint.TIER);
+  }
+
   async removeImportantDates(dateIds) {
     return await performApiRequest(
       this,

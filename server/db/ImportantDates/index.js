@@ -33,7 +33,7 @@ ImportantDatesController.prototype.checkImportantDatesCount = async function (
       [userId],
       function (err, res) {
         if (err) {
-          reject(new DatabaseError(err.message));
+          return reject(new DatabaseError(err.message));
         }
         if (res.rows.length === 0) {
           // user has no important dates

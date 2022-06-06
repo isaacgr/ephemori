@@ -15,7 +15,8 @@ const ROUTE_PATHS = {
     MAX_DATES: "/dates/maxDates"
   },
   USER: {
-    SET_USER: "/user"
+    SET_USER: "/user",
+    TIER: "/user/tier"
   }
 };
 

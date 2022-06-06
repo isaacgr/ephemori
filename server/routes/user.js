@@ -9,6 +9,29 @@ module.exports = (db) => {
   const userService = new UserService(db);
   const authService = new AuthService(db);
 
+  router.get(
+    ROUTE_PATHS.USER.TIER,
+    (...args) => authService.isAuthenticated(...args),
+    async (req, res) => {
+      try {
+        const userId = req.session.user.id;
+        if (userId == null) {
+          throw new InvalidCredentialsError("Invalid user get request.");
+        }
+        const tier = await userService.getUserTier(userId);
+        res.status(200).json({
+          user: {
+            tier
+          }
+        });
+      } catch (e) {
+        res.status(400).json({
+          errorMessage: `${e.code} : ${e.message}`
+        });
+      }
+    }
+  );
+
   router.patch(
     ROUTE_PATHS.USER.SET_USER,
     (...args) => authService.isAuthenticated(...args),

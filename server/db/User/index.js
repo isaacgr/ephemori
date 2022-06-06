@@ -12,12 +12,12 @@ const {
   getUserByIdCommand,
   getUserPasswordCommand,
   getUserByCredentialsCommand,
-  getUserByTokenCommand,
   setUserVerifiedCommand,
   checkUserVerfiedCommand,
   getUserVerifiedCommand,
   updatePasswordCommand,
-  updateUserCommand
+  updateUserCommand,
+  getUserTierCommand
 } = require("./commands.js");
 
 class UserController {
@@ -25,6 +25,25 @@ class UserController {
     this.db = db;
   }
 }
+
+UserController.prototype.getUserTier = async function (userId) {
+  const _this = this;
+  return new Promise((resolve, reject) => {
+    _this.db.query(getUserTierCommand, [userId], function (err, res) {
+      if (err) {
+        return reject(new DatabaseError(err.message, err.code));
+      }
+      if (res.rows.length === 0) {
+        /**
+         * Likely the user doesnt exist if this
+         * doesnt return anything
+         */
+        return reject(new NoSuchUserError("No tier found for user."));
+      }
+      resolve(res.rows[0].tier);
+    });
+  });
+};
 
 UserController.prototype.createUser = async function (user) {
   const _this = this;

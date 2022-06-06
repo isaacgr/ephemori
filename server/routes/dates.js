@@ -3,9 +3,11 @@ const router = express.Router();
 const { ROUTE_PATHS } = require("../utils/constants");
 const ImportantDatesService = require("../db/ImportantDates");
 const AuthService = require("../middleware/auth");
+const UserService = require("../db/User");
 
 module.exports = (db) => {
   const importantDatesService = new ImportantDatesService(db);
+  const userService = new UserService(db);
   const authService = new AuthService(db);
 
   router.post(
@@ -98,11 +100,13 @@ module.exports = (db) => {
     (...args) => authService.isAuthenticated(...args),
     async (req, res) => {
       try {
-        const { tier } = req.session.user;
-        const dates = await ImportantDatesService.MAX_IMPORTANT_DATES[tier];
+        const tier = await userService.getUserTier(req.session.user.id);
+        const maxDates = await ImportantDatesService.MAX_IMPORTANT_DATES[tier];
         res.status(200).json({
           success: true,
-          maxDates: dates
+          dates: {
+            maxDates
+          }
         });
       } catch (e) {
         res.status(400).json({

@@ -60,7 +60,8 @@ export const Endpoint = {
   SET_IMPORTANT_DATES: "/v1/dates",
   GET_IMPORTANT_DATES: "/v1/dates",
   DELETE_IMPORTANT_DATE: "/v1/dates",
-  MAX_DATES: "/v1/dates/maxDates"
+  MAX_DATES: "/v1/dates/maxDates",
+  TIER: "/v1/user/tier"
 };
 
 export const AuthErrorCode = {

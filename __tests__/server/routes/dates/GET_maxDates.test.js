@@ -37,6 +37,10 @@ const importantDates = [
   }
 ];
 
+const AuthService = require("../../../../server/middleware/auth");
+const UserService = require("../../../../server/db/User");
+const ImportantDatesService = require("../../../../server/db/ImportantDates");
+
 describe(`GET ${ROUTE_PATHS.DATES.MAX_DATES}`, () => {
   let userId;
   beforeAll(async () => {
@@ -101,14 +105,18 @@ describe(`GET ${ROUTE_PATHS.DATES.MAX_DATES}`, () => {
         };
         next();
       });
+    const getUserTierSpy = jest.spyOn(UserService.prototype, "getUserTier");
     const response = await request(app).get(
       `/api/${apiVersion}${ROUTE_PATHS.DATES.MAX_DATES}`
     );
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
       success: true,
-      maxDates: ImportantDatesService.MAX_IMPORTANT_DATES[user.tier]
+      dates: {
+        maxDates: ImportantDatesService.MAX_IMPORTANT_DATES[user.tier]
+      }
     });
-    expect(typeof response.body.maxDates).toBe("number");
+    expect(typeof response.body.dates.maxDates).toBe("number");
+    expect(getUserTierSpy).toHaveBeenCalled();
   });
 });

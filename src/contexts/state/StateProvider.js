@@ -36,7 +36,9 @@ const StateProvider = ({ children }) => {
       if (isMounted) {
         try {
           const { dates } = await stateManagement.getImportantDates();
-          const { maxDates } = await stateManagement.getMaxDates();
+          const {
+            dates: { maxDates }
+          } = await stateManagement.getMaxDates();
           dispatch(actions.setUser(currentUser));
           dispatch(actions.getImportantDates(dates));
           dispatch(actions.getMaxDates(maxDates));
@@ -51,6 +53,18 @@ const StateProvider = ({ children }) => {
       isMounted = false;
     };
   }, [currentUser]);
+
+  const getUserTier = async () => {
+    /**
+     * We dont want to store this in state just yet
+     * since we dont want a user to manipulate it
+     */
+    try {
+      return await stateManagement.getUserTier();
+    } catch (e) {
+      dispatch(actions.gotError(e.message));
+    }
+  };
 
   const getImportantDates = async () => {
     try {
@@ -104,7 +118,8 @@ const StateProvider = ({ children }) => {
     getImportantDates,
     addImportantDates,
     removeImportantDates,
-    setUser
+    setUser,
+    getUserTier
   };
   return (
     <context.Provider value={value}>

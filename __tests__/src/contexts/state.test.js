@@ -49,7 +49,7 @@ describe("<StateProvider/>", () => {
       .mockImplementation(() => Promise.resolve({ dates: ["dateInfo"] }));
     jest
       .spyOn(StateHandler.prototype, "getMaxDates")
-      .mockImplementation(() => Promise.resolve({ maxDates: 80 }));
+      .mockImplementation(() => Promise.resolve({ dates: { maxDates: 80 } }));
     render(
       <Auth.AuthProvider>
         <StateProvider>

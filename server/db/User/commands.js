@@ -23,30 +23,22 @@ FROM users
 WHERE email = $1
 `;
 
+exports.getUserTierCommand = `
+SELECT
+  tier
+FROM users
+WHERE id = $1
+`;
+
 exports.getUserByCredentialsCommand = `
 SELECT 
   id,
   email,
   display_name,
   date_of_birth,
-  is_user_set,
-  tier
+  is_user_set
 FROM users
 WHERE email = $1
-`;
-
-exports.getUserByTokenCommand = `
-SELECT
-  l.id,
-  l.email,
-  l.display_name,
-  l.date_of_birth,
-  l.is_user_set
-FROM users l
-INNER JOIN verification_tokens r ON
-  r.user_id = l.id
-WHERE
-  r.token = ?
 `;
 
 exports.setUserVerifiedCommand = `

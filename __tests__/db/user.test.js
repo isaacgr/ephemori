@@ -125,8 +125,7 @@ describe("DATABASE UserService", () => {
           email: user.credentials.email,
           displayName: null,
           dateOfBirth: null,
-          isUserSet: false,
-          tier: USER_TIERS.basic
+          isUserSet: false
         });
       });
       it("should raise an error if email does not exist", async () => {
@@ -162,8 +161,7 @@ describe("DATABASE UserService", () => {
           email: user.credentials.email,
           displayName: null,
           dateOfBirth: null,
-          isUserSet: false,
-          tier: USER_TIERS.basic
+          isUserSet: false
         });
       });
       it("should raise an error if the email does not exist", async () => {
