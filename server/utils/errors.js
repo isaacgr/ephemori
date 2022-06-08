@@ -77,6 +77,19 @@ class DateError extends Error {
   }
 }
 
+class UserError extends Error {
+  constructor(message, userParams) {
+    super(message);
+    this.message = message;
+    this.code = "USER_ERROR";
+    if (userParams) {
+      const { dateOfBirth, id } = userParams;
+      this.id = id;
+      this.dateOfBirth = dateOfBirth;
+    }
+  }
+}
+
 class SetUserError extends Error {
   constructor(message) {
     super(message);
@@ -95,5 +108,6 @@ module.exports = {
   SetUserError,
   DateError,
   UserNotVerifiedError,
-  NoSuchUserError
+  NoSuchUserError,
+  UserError
 };

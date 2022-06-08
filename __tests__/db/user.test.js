@@ -6,7 +6,8 @@ const {
   InvalidCredentialsError,
   NoSuchUserError,
   InvalidTokenError,
-  AlreadyVerifiedError
+  AlreadyVerifiedError,
+  UserError
 } = require("../../server/utils/errors");
 const { compareHash } = require("../../server/utils/hashing");
 const { USER_TIERS } = require("../../server/db/types");
@@ -322,6 +323,18 @@ describe("DATABASE UserService", () => {
           isUserSet: false,
           id: userId
         });
+      });
+      it("should be unable to set a birthday in the future", async () => {
+        const userId = await userController.createUser(user);
+        const e = async () => {
+          await userController.updateUser({
+            dateOfBirth: "2100-01-01",
+            id: userId,
+            isUserSet: true
+          });
+        };
+        await expect(e()).rejects.toThrow(UserError);
+        await expect(e()).rejects.toThrow("Cannot set birthday in the future.");
       });
     });
   });

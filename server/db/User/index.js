@@ -3,7 +3,8 @@ const {
   InvalidTokenError,
   InvalidCredentialsError,
   DatabaseError,
-  NoSuchUserError
+  NoSuchUserError,
+  UserError
 } = require("../../utils/errors");
 const { hashAndSalt, compareHash } = require("../../utils/hashing");
 
@@ -199,6 +200,16 @@ UserController.prototype.updateUser = async function ({
       function (err, res) {
         if (err) {
           return reject(new DatabaseError(err.message, err.code));
+        }
+        const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+          .toISOString()
+          .split("T")[0];
+        if (new Date(dateOfBirth) > new Date(tomorrow)) {
+          return reject(
+            new UserError("Cannot set birthday in the future.", {
+              dateOfBirth
+            })
+          );
         }
         /**
          * TODO: Handle empty rows
