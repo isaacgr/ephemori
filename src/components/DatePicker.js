@@ -4,11 +4,11 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-export default ({ value, label, onAccept, onChange }) => {
+export default ({ value, label, onAccept, onChange, disableFuture }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
-        disableFuture
+        disableFuture={disableFuture}
         label={label}
         disableMaskedInput={true}
         mask="____-__-__"

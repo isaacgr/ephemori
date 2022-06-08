@@ -78,7 +78,21 @@ const StateProvider = ({ children }) => {
   const addImportantDates = async (importantDates) => {
     try {
       const res = await stateManagement.setImportantDates(importantDates);
-      dispatch(actions.addImportantDate(res.dates));
+      const rejected = {};
+      const fulfilled = [];
+      res.dates.forEach((date) => {
+        if (date.status === "rejected") {
+          rejected[date.reason] = date.value.date;
+        } else {
+          fulfilled.push(date);
+        }
+      });
+      const errorStrings = [];
+      Object.entries(rejected).map((entry) => {
+        errorStrings.push(`${entry[0]} [${entry[1]}]`);
+      });
+      dispatch(actions.addImportantDates(fulfilled));
+      dispatch(actions.gotError(errorStrings.join("\n")));
     } catch (e) {
       dispatch(actions.gotError(e.message));
     }
@@ -87,7 +101,21 @@ const StateProvider = ({ children }) => {
   const removeImportantDates = async (dateIds) => {
     try {
       const res = await stateManagement.removeImportantDates(dateIds);
-      dispatch(actions.removeImportantDate(res.dates));
+      const rejected = {};
+      const fulfilled = [];
+      res.dates.forEach((date) => {
+        if (date.status === "rejected") {
+          rejected[date.reason] = date.value.id;
+        } else {
+          fulfilled.push(date);
+        }
+      });
+      const errorStrings = [];
+      Object.entries(rejected).map((entry) => {
+        errorStrings.push(`${entry[0]} [${entry[1]}]`);
+      });
+      dispatch(actions.removeImportantDates(fulfilled));
+      dispatch(actions.gotError(errorStrings.join("\n")));
     } catch (e) {
       dispatch(actions.gotError(e.message));
     }

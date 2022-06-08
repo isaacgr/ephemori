@@ -180,6 +180,65 @@ describe("DATABASE ImportantDatesService", () => {
       await expect(e()).rejects.toThrow(DatabaseError);
       await expect(e()).rejects.toThrow("Unable to set important date.");
     });
+    it("should allow a basic user to add a date one day in the future", async () => {
+      const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+        .toISOString()
+        .split("T")[0];
+      const date = {
+        date: new Date(tomorrow).toISOString().split("T")[0],
+        color: "#dfdfdf",
+        significance: "test"
+      };
+      const result = await Promise.all(
+        importantDatesController.addImportantDates(userId, [date])
+      );
+      expect(result).toEqual([
+        {
+          ...date,
+          id: expect.any(String)
+        }
+      ]);
+    });
+    it("should allow a premium user to add a date in the future", async () => {
+      await db.query("UPDATE users SET tier = 2 WHERE email = $1", [
+        user.credentials.email
+      ]);
+      const date = {
+        date: "2100-01-01",
+        color: "#dfdfdf",
+        significance: "test"
+      };
+      const result = await Promise.all(
+        importantDatesController.addImportantDates(userId, [date])
+      );
+      expect(result).toEqual([
+        {
+          id: expect.any(String),
+          ...date
+        }
+      ]);
+    });
+    it("should throw an error if the date is in the future and the user is not premium", async () => {
+      const tomorrowplus1 = new Date(
+        new Date().setDate(new Date().getDate() + 2)
+      )
+        .toISOString()
+        .split("T")[0];
+      const date = {
+        date: new Date(tomorrowplus1).toISOString().split("T")[0],
+        color: "#dfdfdf",
+        significance: "test"
+      };
+      const e = async () => {
+        await Promise.all(
+          importantDatesController.addImportantDates(userId, [date])
+        );
+      };
+      await expect(e()).rejects.toThrow(DateError);
+      await expect(e()).rejects.toThrow(
+        "Future dates only available for premium users."
+      );
+    });
   });
   describe("check count", () => {
     it("should return total number of dates if less than the defined max", async () => {

@@ -7,11 +7,11 @@ export const actions = {
     type: "GET_MAX_DATES",
     value: state
   }),
-  addImportantDate: (state) => ({
+  addImportantDates: (state) => ({
     type: "ADD_IMPORTANT_DATES",
     value: state
   }),
-  removeImportantDate: (state) => ({
+  removeImportantDates: (state) => ({
     type: "REMOVE_IMPORTANT_DATES",
     value: state
   }),

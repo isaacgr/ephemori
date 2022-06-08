@@ -6,8 +6,9 @@ import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
 import { getDateString } from "../../util/dates";
 import { colors } from "../../util/constants";
-import Select from "@mui/material/Select";
-import "react-datepicker/dist/react-datepicker.css";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import { green } from "@mui/material/colors";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -20,6 +21,7 @@ const ImportantDateSelector = ({
   const [startDate, setStartDate] = useState(new Date());
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [addButtonDisabled, setAddButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [item, setItem] = useState({
@@ -89,6 +91,7 @@ const ImportantDateSelector = ({
       </div>
       <div className="content-block">
         <DatePicker
+          disableFuture={false}
           label="Date"
           value={startDate}
           onChange={(date) => {
@@ -113,18 +116,34 @@ const ImportantDateSelector = ({
         />
       </div>
       <div className="content-block">
-        <Button
-          disabled={addButtonDisabled}
-          color="success"
-          variant="outlined"
-          sx={{ borderRadius: "8px" }}
-          onClick={async () => {
-            setItem((item) => ({ ...item }));
-            await addImportantDates([item]);
-          }}
-        >
-          <AddIcon></AddIcon>
-        </Button>
+        <Box sx={{ m: 1, position: "relative" }}>
+          <Button
+            variant="outlined"
+            color="success"
+            disabled={loading || addButtonDisabled}
+            onClick={async () => {
+              setLoading(true);
+              await addImportantDates([item]);
+              setLoading(false);
+              setItem((item) => ({ ...item }));
+            }}
+          >
+            <AddIcon />
+          </Button>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: green[500],
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                marginTop: "-12px",
+                marginLeft: "-12px"
+              }}
+            />
+          )}
+        </Box>
       </div>
     </div>
   );

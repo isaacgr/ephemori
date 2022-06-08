@@ -8,6 +8,7 @@ const {
   removeImportantDatesCommand,
   addImportantDatesCommand
 } = require("./commands");
+const { getUserTierCommand } = require("../User/commands");
 
 class ImportantDatesController {
   static COLOR_PATTERN = /^#([0-9a-f]{3}){1,2}$/i;
@@ -148,26 +149,56 @@ ImportantDatesController.prototype.addImportantDates = function (
           new DateError("Invalid date format.", { date, color, significance })
         );
       }
-      _this.db.query(
-        addImportantDatesCommand,
-        [date, color, significance, userId],
-        function (err, res) {
-          if (err) {
-            return reject(
-              new DatabaseError(
-                `Unable to set important date. Date [${date}]. Error [${err.message}]`
-              )
-            );
-          }
-          /**
-           * TODO: Handle empty rows
-           */
-          console.log(
-            `Important date added [${res.rows[0].id}]. User [${res.rows[0].user_id}]`
+      _this.db.query(getUserTierCommand, [userId], function (err, res) {
+        if (err) {
+          return reject(
+            new DatabaseError(
+              `Unable to determine user tier. Error [${err.message}]`
+            )
           );
-          resolve({ ...res.rows[0] });
         }
-      );
+        if (res.rows.length === 0) {
+          return reject(
+            new DatabaseError(
+              `Unable to set important date. Could not determine user tier.`
+            )
+          );
+        }
+        const tier = res.rows[0].tier;
+        const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+          .toISOString()
+          .split("T")[0];
+        if (
+          new Date(date) > new Date(tomorrow) &&
+          tier !== USER_TIERS.premium
+        ) {
+          return reject(
+            new DateError("Future dates only available for premium users.", {
+              date
+            })
+          );
+        }
+        _this.db.query(
+          addImportantDatesCommand,
+          [date, color, significance, userId],
+          function (err, res) {
+            if (err) {
+              return reject(
+                new DatabaseError(
+                  `Unable to set important date. Date [${date}]. Error [${err.message}]`
+                )
+              );
+            }
+            if (res.rows.length === 0) {
+              return reject(new DateError("Important date not set.", { date }));
+            }
+            console.log(
+              `Important date added [${res.rows[0].id}]. User [${res.rows[0].date}]`
+            );
+            resolve({ ...res.rows[0] });
+          }
+        );
+      });
     });
   });
 };

@@ -9,6 +9,7 @@ const UserInfo = ({ dob, setUser }) => {
     <div className="user-info">
       <div className="content-block">
         <DatePicker
+          disableFuture={true}
           label="Birthday"
           value={parseISO(startDate)}
           onAccept={async (date) => {
