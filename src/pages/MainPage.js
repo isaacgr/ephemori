@@ -5,7 +5,7 @@ import { ImportantDatesTable } from "../components/ImportantDates";
 import MenuBar from "../components/MenuBar";
 import StateProvider from "../contexts/state/StateProvider";
 import Alert from "@mui/material/Alert";
-import WaterMark from "../components/WaterMark";
+import WaterMarkWrapper from "../components/WaterMarkWrapper";
 import LoadingBar from "../components/LoadingBar";
 
 const MainPage = () => {
@@ -15,12 +15,9 @@ const MainPage = () => {
   const [loadingPage, setLoadingPage] = useState(false);
 
   const beginAlarm = async function () {
-    const showWaterMark = await show();
-    if (!showWaterMark) {
-      return;
-    }
     window.location.reload();
   };
+
   useEffect(() => {
     let isMounted = true;
     (async () => {
@@ -56,7 +53,7 @@ const MainPage = () => {
         {loadingPage ? (
           <LoadingBar />
         ) : (
-          <WaterMark text={text} show={beginAlarm}>
+          <WaterMarkWrapper text={text} beginAlarm={beginAlarm}>
             <div className="content-block content-block--flex">
               <Grid
                 dateOfBirth={state.user.dateOfBirth}
@@ -69,7 +66,7 @@ const MainPage = () => {
                 )}
               </div>
             </div>
-          </WaterMark>
+          </WaterMarkWrapper>
         )}
       </div>
     </>

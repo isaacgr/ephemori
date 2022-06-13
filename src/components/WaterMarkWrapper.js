@@ -1,7 +1,7 @@
 import React from "react";
-import ReactWaterMark from "react-watermark-component";
+import WaterMark from "./WaterMark";
 
-const WaterMark = ({ children, beginAlarm, text }) => {
+const WaterMarkWrapper = ({ children, beginAlarm, text }) => {
   const options = {
     chunkWidth: 200,
     chunkHeight: 60,
@@ -14,15 +14,15 @@ const WaterMark = ({ children, beginAlarm, text }) => {
   };
 
   return (
-    <ReactWaterMark
+    <WaterMark
       waterMarkText={text}
       openSecurityDefense
       securityAlarm={beginAlarm}
       options={options}
     >
       {children}
-    </ReactWaterMark>
+    </WaterMark>
   );
 };
 
-export default WaterMark;
+export default WaterMarkWrapper;
