@@ -46,7 +46,7 @@ const ImportantDateSelector = ({
   }, [importantDates]);
 
   return (
-    <div className="content-block--flex important-dates__item">
+    <div className="content-block--flex important-dates__selector">
       <div className="dropdown">
         <Button
           variant="contained"

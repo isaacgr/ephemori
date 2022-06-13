@@ -8,12 +8,15 @@ import Alert from "@mui/material/Alert";
 import WaterMarkWrapper from "../components/WaterMarkWrapper";
 import LoadingBar from "../components/LoadingBar";
 import { USER_TIERS } from "../util/types";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Box from "@mui/material/Box";
 
 const MainPage = () => {
   const state = useContext(StateProvider.context);
   const [text, setText] = useState("ephemori.com");
   const [error, setError] = useState("");
   const [loadingPage, setLoadingPage] = useState(false);
+  const matches = useMediaQuery("(max-width:600px)");
 
   const beginAlarm = async function () {
     window.location.reload();
@@ -55,7 +58,12 @@ const MainPage = () => {
           <LoadingBar />
         ) : (
           <WaterMarkWrapper text={text} beginAlarm={beginAlarm}>
-            <div className="content-block content-block--flex">
+            <Box
+              sx={
+                matches ? { flexDirection: "column", alignItems: "center" } : {}
+              }
+              className="content-block content-block--flex"
+            >
               <Grid
                 dateOfBirth={state.user.dateOfBirth}
                 importantDates={state.importantDates}
@@ -66,7 +74,7 @@ const MainPage = () => {
                   <ImportantDatesTable importantDates={state.importantDates} />
                 )}
               </div>
-            </div>
+            </Box>
           </WaterMarkWrapper>
         )}
       </div>

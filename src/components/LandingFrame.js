@@ -8,7 +8,7 @@ const LandingFrame = () => {
     backgroundPosition: "center",
     height: "45vh"
   };
-  return <div style={style}></div>;
+  return <div className="landing-frame" style={style}></div>;
 };
 
 export default LandingFrame;
