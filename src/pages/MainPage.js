@@ -7,6 +7,7 @@ import StateProvider from "../contexts/state/StateProvider";
 import Alert from "@mui/material/Alert";
 import WaterMarkWrapper from "../components/WaterMarkWrapper";
 import LoadingBar from "../components/LoadingBar";
+import { USER_TIERS } from "../util/types";
 
 const MainPage = () => {
   const state = useContext(StateProvider.context);
@@ -25,7 +26,7 @@ const MainPage = () => {
         if (isMounted) {
           setLoadingPage(true);
           const response = await state.getUserTier();
-          if (response.user.tier !== 1) {
+          if (response.user.tier === USER_TIERS.premium) {
             setText("");
           }
         }

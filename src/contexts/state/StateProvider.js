@@ -137,6 +137,10 @@ const StateProvider = ({ children }) => {
     }
   };
 
+  const setError = (err) => {
+    dispatch(actions.gotError(err));
+  };
+
   const value = {
     importantDates: state.importantDates,
     user: state.user,
@@ -147,7 +151,8 @@ const StateProvider = ({ children }) => {
     addImportantDates,
     removeImportantDates,
     setUser,
-    getUserTier
+    getUserTier,
+    setError
   };
   return (
     <context.Provider value={value}>

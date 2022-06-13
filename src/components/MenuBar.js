@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth/AuthProvider";
 import logo from "../images/profile.png";
+import UpgradeModal from "./UpgradeModal";
 
 const pages = [
   { name: "Settings", link: "/settings" },
@@ -118,6 +119,7 @@ export default () => {
                 </Button>
               ))}
             </Box>
+            <UpgradeModal />
             <Box sx={{ flexGrow: 0 }}>
               <Button
                 color="inherit"
