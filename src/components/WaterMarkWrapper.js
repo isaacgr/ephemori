@@ -8,7 +8,7 @@ const WaterMarkWrapper = ({ children, beginAlarm, text }) => {
     textAlign: "left",
     textBaseline: "bottom",
     globalAlpha: 0.4,
-    font: "16px Microsoft Yahei",
+    font: "20px Microsoft Yahei",
     rotateAngle: -0.26,
     fillStyle: "#333"
   };
