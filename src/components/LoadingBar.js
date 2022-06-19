@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 export default () => {
   return (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress color="secondary" />
       <Typography variant="h5" component="div">
         Loading...
       </Typography>
