@@ -29,8 +29,7 @@ export default function BasicModal() {
   const upgradeBenefits = [
     "Remove water mark",
     "Add up to 100 important dates",
-    "Add future important dates",
-    "Increase number of rows on the grid"
+    "Add future important dates"
   ];
 
   return (
