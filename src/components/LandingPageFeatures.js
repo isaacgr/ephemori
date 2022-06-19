@@ -20,8 +20,8 @@ const LandingPageFeatures = () => {
             border: "1px solid rgba(255,255,255,.5)",
             boxSizing: "initial",
             padding: "1rem",
-            backgroundColor: alpha(theme.palette.primary.light, 0.5),
-            color: theme.palette.primary.dark
+            backgroundColor: alpha(theme.palette.secondary.light, 0.5),
+            color: theme.palette.secondary.dark
           }}
           fontSize="large"
         />
@@ -45,8 +45,8 @@ const LandingPageFeatures = () => {
             border: "1px solid rgba(255,255,255,.5)",
             boxSizing: "initial",
             padding: "1rem",
-            backgroundColor: alpha(theme.palette.primary.light, 0.5),
-            color: theme.palette.primary.dark
+            backgroundColor: alpha(theme.palette.secondary.light, 0.5),
+            color: theme.palette.secondary.dark
           }}
           fontSize="large"
         />
@@ -70,8 +70,8 @@ const LandingPageFeatures = () => {
             border: "1px solid rgba(255,255,255,.5)",
             boxSizing: "initial",
             padding: "1rem",
-            backgroundColor: alpha(theme.palette.primary.light, 0.5),
-            color: theme.palette.primary.dark
+            backgroundColor: alpha(theme.palette.secondary.light, 0.5),
+            color: theme.palette.secondary.dark
           }}
           fontSize="large"
         />
