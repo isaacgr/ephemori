@@ -25,6 +25,13 @@ import ForgotPassword from "../pages/ForgotPassword";
 import PasswordReset from "../pages/PasswordReset";
 import VerifyEmail from "../pages/VerifyEmail";
 
+import PrivacyPolicy from "../policy-pages/PrivacyPolicy";
+import TermsAndConditions from "../policy-pages/TermsAndConditions";
+import CookiePolicy from "../policy-pages/CookiePolicy";
+import Contact from "../pages/Contact";
+
+import Footer from "../components/Footer";
+
 const AppRouter = () => {
   const [theme, setTheme] = useState("light");
 
@@ -35,6 +42,13 @@ const AppRouter = () => {
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route index exact path="/" element={<LandingPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
           <Route
             exact
             path="/login"
@@ -98,6 +112,7 @@ const AppRouter = () => {
           />
         </Routes>
       </Router>
+      <Footer />
     </ThemeProvider>
   );
 };

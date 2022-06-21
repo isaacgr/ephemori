@@ -9,6 +9,7 @@ import Alert from "@mui/material/Alert";
 import { useAuth } from "../contexts/auth/AuthProvider";
 import FormButton from "../components/FormButton";
 import { useNavigate } from "react-router-dom";
+import CookieConsent from "../components/CookieConsent.tsx";
 
 const Login = () => {
   const [emailRef, setEmailRef] = useState("");
@@ -16,6 +17,7 @@ const Login = () => {
   const { currentUser, login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [cookiesAccepted, setCookiesAccepted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,9 +32,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setError("");
       setLoading(true);
+      if (!cookiesAccepted) {
+        throw new Error("Must accept cookies to login");
+      }
       const response = await login(emailRef, passwordRef);
       if (response.user.isUserSet) {
         navigate("/my-grid");
@@ -83,6 +89,10 @@ const Login = () => {
               <Link to="/forgot-password">Forgot Password?</Link>
             </Typography>
           </div>
+          <CookieConsent
+            onAccept={() => setCookiesAccepted(true)}
+            cookieName="cookies-accepted"
+          />
         </Paper>
       </div>
       <div className="content-block">

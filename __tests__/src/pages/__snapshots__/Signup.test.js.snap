@@ -165,6 +165,54 @@ exports[`<Signup/> should render correctly when loaded 1`] = `
           </div>
         </div>
       </form>
+      <div
+        className="MuiFormGroup-root css-dmmspl-MuiFormGroup-root"
+      >
+        <label
+          className="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+        >
+          <span
+            className="MuiCheckbox-root MuiCheckbox-colorSecondary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-root css-1sg8fd1-MuiButtonBase-root-MuiCheckbox-root"
+            onBlur={[Function]}
+            onContextMenu={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={null}
+          >
+            <input
+              checked={false}
+              className="PrivateSwitchBase-input css-1m9pwf3"
+              data-indeterminate={false}
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="CheckBoxOutlineBlankIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+              />
+            </svg>
+          </span>
+          <span
+            className="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+          >
+            By checking this box you agree to the terms and conditions and agree that you have read the privacy policy
+          </span>
+        </label>
+      </div>
     </div>
   </div>
   <div

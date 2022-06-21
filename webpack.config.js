@@ -68,6 +68,16 @@ module.exports = function (server = process.env.API_SERVER_URL) {
               loader: "file-loader"
             }
           ]
+        },
+        {
+          test: /\.tsx?$/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-typescript"]
+            }
+          },
+          exclude: /node_modules/
         }
       ]
     },

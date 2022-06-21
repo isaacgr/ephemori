@@ -8,8 +8,22 @@
   }
 }
 
+.footer-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 @media screen and (max-width: 600px) {
   .footer {
     width: 100%;
+  }
+  .content-block.footer-content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    &>*{
+      margin-top: 0.5rem
+    }
   }
 }

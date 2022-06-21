@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import Footer from "../components/Footer";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ const LandingPage = () => {
         </div>
         <LandingPageFeatures />
       </div>
-      <Footer />
     </>
   );
 };

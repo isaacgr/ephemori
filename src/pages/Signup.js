@@ -8,6 +8,9 @@ import FormGroup from "@mui/material/FormGroup";
 import Alert from "@mui/material/Alert";
 import FormButton from "../components/FormButton";
 import { useAuth } from "../contexts/auth/AuthProvider";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Footer from "../components/Footer";
 
 const Signup = () => {
   const [emailRef, setEmailRef] = useState("");
@@ -17,7 +20,7 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [signupResponse, setSignupResponse] = useState({});
-  const [requestEmail, setRequestEmail] = useState({});
+  const [agree, setAgree] = useState(false);
 
   const handleResend = async (e) => {
     e.preventDefault();
@@ -40,6 +43,11 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!agree) {
+      return setError(
+        "You must agree to the terms and conditions and agree that you have read the privacy policy"
+      );
+    }
     if (passwordRef !== passwordConfirmRef) {
       return setError("Passwords do not match");
     }
@@ -115,6 +123,20 @@ const Signup = () => {
               </form>
             </>
           )}
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="secondary"
+                  checked={agree}
+                  onChange={(e) => {
+                    setAgree(e.target.checked);
+                  }}
+                />
+              }
+              label={`By checking this box you agree to the terms and conditions and agree that you have read the privacy policy`}
+            />
+          </FormGroup>
         </Paper>
       </div>
       <div className="content-block">
