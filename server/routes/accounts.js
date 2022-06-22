@@ -29,7 +29,7 @@ module.exports = (db) => {
       const token = await tokenService.createVerifyToken(userId);
       await sendEmail(
         userInfo.credentials.email,
-        "Verify your account with Life Plot",
+        "Verify your account with ephemori",
         {
           link: `${process.env.FRONTEND_URL}/verify-email?userId=${userId}&token=${token}`
         },
@@ -138,7 +138,7 @@ module.exports = (db) => {
       const token = await tokenService.createResetToken(id);
       await sendEmail(
         email,
-        "Reset your Life Plot password",
+        "Reset your ephemori password",
         {
           link: `${process.env.FRONTEND_URL}/password-reset?userId=${id}&token=${token}`
         },
