@@ -121,22 +121,22 @@ const Signup = () => {
                   </FormGroup>
                 </FormControl>
               </form>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      checked={agree}
+                      onChange={(e) => {
+                        setAgree(e.target.checked);
+                      }}
+                    />
+                  }
+                  label={`By checking this box you agree to the terms and conditions and agree that you have read and understood our privacy policy`}
+                />
+              </FormGroup>
             </>
           )}
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="secondary"
-                  checked={agree}
-                  onChange={(e) => {
-                    setAgree(e.target.checked);
-                  }}
-                />
-              }
-              label={`By checking this box you agree to the terms and conditions and agree that you have read the privacy policy`}
-            />
-          </FormGroup>
         </Paper>
       </div>
       <div className="content-block">
