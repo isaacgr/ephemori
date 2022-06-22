@@ -209,7 +209,7 @@ exports[`<Signup/> should render correctly when loaded 1`] = `
           <span
             className="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
           >
-            By checking this box you agree to the terms and conditions and agree that you have read the privacy policy
+            By checking this box you agree to the terms and conditions and agree that you have read and understood our privacy policy
           </span>
         </label>
       </div>
