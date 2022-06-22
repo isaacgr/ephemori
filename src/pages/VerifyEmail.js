@@ -23,10 +23,14 @@ const VerifyEmail = () => {
     const token = query.get("token");
     (async () => {
       try {
-        const response = await verifySignupRequest(userId, token);
         if (isMounted) {
           setLoading(true);
-          setSignupResponse(response.message);
+          const response = await verifySignupRequest(userId, token);
+          if (response.message) {
+            setSignupResponse(response.message);
+          } else {
+            console.log("No response for the verification");
+          }
         }
       } catch (e) {
         if (isMounted) {
