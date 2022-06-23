@@ -48,11 +48,12 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const signup = async (email, password) => {
+  const signup = async (email, password, reRequest) => {
     try {
       const response = await auth.createUserWithEmailAndPassword(
         email,
-        password
+        password,
+        reRequest
       );
       setCurrentUser(response.user);
       return response;

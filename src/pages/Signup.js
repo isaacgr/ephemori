@@ -21,18 +21,16 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [signupResponse, setSignupResponse] = useState({});
   const [agree, setAgree] = useState(false);
+  const [resend, setResend] = useState(false);
 
   const handleResend = async (e) => {
     e.preventDefault();
     try {
       setError("");
       setLoading(true);
-      const { verificationRequestSent, message } = await signup(
-        emailRef,
-        passwordRef
-      );
+      const { success, message } = await signup(emailRef, passwordRef, resend);
       setSignupResponse(() => ({
-        verificationRequestSent,
+        success,
         message
       }));
     } catch (e) {
@@ -88,7 +86,7 @@ const Signup = () => {
                 <Typography variant="h4">Sign Up</Typography>
                 {error && <Alert severity="error">{error}</Alert>}
               </div>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={resend ? handleResend : handleSubmit}>
                 <FormControl>
                   <FormGroup className="content-block">
                     <TextField
@@ -119,22 +117,36 @@ const Signup = () => {
                   <FormGroup className="content-block">
                     <FormButton buttonText="Sign Up" loading={loading} />
                   </FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="secondary"
+                        checked={resend}
+                        onChange={(e) => {
+                          setResend(e.target.checked);
+                        }}
+                      />
+                    }
+                    label={`Re-send verification email`}
+                  />
                 </FormControl>
               </form>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      checked={agree}
-                      onChange={(e) => {
-                        setAgree(e.target.checked);
-                      }}
-                    />
-                  }
-                  label={`By checking this box you agree to the terms and conditions and agree that you have read and understood our privacy policy`}
-                />
-              </FormGroup>
+              {!resend && (
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="secondary"
+                        checked={agree}
+                        onChange={(e) => {
+                          setAgree(e.target.checked);
+                        }}
+                      />
+                    }
+                    label={`By checking this box you agree to the terms and conditions and agree that you have read and understood our privacy policy`}
+                  />
+                </FormGroup>
+              )}
             </>
           )}
         </Paper>

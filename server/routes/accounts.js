@@ -20,21 +20,34 @@ module.exports = (db) => {
         password: req.body.password
       }
     };
-
-    try {
-      if (!isValidEmail(userInfo.credentials.email)) {
-        throw new InvalidEmailFormatError("Invalid email format");
-      }
-      const userId = await userService.createUser(userInfo);
-      const token = await tokenService.createVerifyToken(userId);
+    const reRequest = req.body.reRequest;
+    const sendVerifyEmail = async (email, userId, token) =>
       await sendEmail(
-        userInfo.credentials.email,
+        email,
         "Verify your account with ephemori",
         {
           link: `${process.env.FRONTEND_URL}/verify-email?userId=${userId}&token=${token}`
         },
         "../email/templates/signUp.handlebars"
       );
+
+    try {
+      if (!isValidEmail(userInfo.credentials.email)) {
+        throw new InvalidEmailFormatError("Invalid email format");
+      }
+      if (!reRequest) {
+        const userId = await userService.createUser(userInfo);
+        const token = await tokenService.createVerifyToken(userId);
+        await sendVerifyEmail(userInfo.credentials.email, userId, token);
+      } else {
+        const { id } = await userService.getUserByCredentials(
+          userInfo.credentials.email,
+          userInfo.credentials.password
+        );
+        const token = await tokenService.createVerifyToken(id);
+        await sendVerifyEmail(userInfo.credentials.email, id, token);
+      }
+
       res.status(201).json({
         success: true,
         message: "An email has been sent to verify your account."

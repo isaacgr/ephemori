@@ -12,10 +12,11 @@ export class AuthHandler {
     }
   }
 
-  async createUserWithEmailAndPassword(email, password) {
+  async createUserWithEmailAndPassword(email, password, reRequest) {
     return await performApiRequest(this, HttpMethod.POST, Endpoint.SIGN_UP, {
       email,
-      password
+      password,
+      reRequest
     });
   }
 
