@@ -17,6 +17,20 @@ module.exports = (database) => {
     createTableIfMissing: true
   });
 
+  function ensureSecure(req, res, next) {
+    if (req.headers["x-forwarded-proto"] === "https") {
+      return next();
+    }
+    res.redirect("https://" + req.hostname + req.url);
+  }
+
+  /**
+   * TODO: Handle this properly for development and testing
+   */
+  if (process.env.NODE_ENV === "production") {
+    app.all("*", ensureSecure);
+  }
+
   app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
   app.use(express.static("public"));
   app.use(bodyParser.json());
