@@ -18,7 +18,7 @@ describe(`GET ${ROUTE_PATHS.ACCOUNTS.EMAIL_VERIFICATION}`, () => {
   let userId;
   beforeAll(async () => {
     try {
-      const result = await createDatabase();
+      const result = await createDatabase(process.env.DATABASE_NAME);
       await database.dropTables();
       console.log(result);
     } catch (e) {

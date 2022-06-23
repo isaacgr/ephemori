@@ -4,8 +4,18 @@ const makeApp = require("./app");
 const TokenService = require("./db/Token");
 const SessionService = require("./db/Session");
 const makeDb = require("./db");
+const fs = require("fs");
+const path = require("path");
 
-const { db, Database, createDatabase } = makeDb("lifegrid");
+const { db, Database, createDatabase } = makeDb({
+  ssl: {
+    require: true,
+    rejectUnauthorized: true,
+    ca: fs
+      .readFileSync(path.resolve(__dirname, "../certs/us-east-1-bundle.pem"))
+      .toString()
+  }
+});
 
 const database = new Database(db);
 const tokenService = new TokenService(db);
@@ -20,7 +30,7 @@ const runDatabase = async () => {
   ) {
     console.log("Creating database...");
     try {
-      const result = await createDatabase();
+      const result = await createDatabase(process.env.DATABASE_NAME);
       console.log(result);
     } catch (e) {
       console.log(e);

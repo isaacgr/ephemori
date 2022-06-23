@@ -1,6 +1,7 @@
 const loadEnv = require("../../loadEnv");
 loadEnv();
 const pg = require("pg");
+
 (function (pg) {
   function camelCaser(snake) {
     var tokens = snake.split(/_+/).filter(function (token) {
@@ -32,13 +33,10 @@ const pg = require("pg");
 
 const { Pool, Client } = require("pg");
 
-module.exports = (applicationDatabaseName) => {
+module.exports = (options) => {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      require: true, // This will help you. But you will see nwe error
-      rejectUnauthorized: false // This line will fix new error
-    }
+    ...options
   });
 
   pool.on("error", (err, client) => {
@@ -66,10 +64,11 @@ module.exports = (applicationDatabaseName) => {
     });
   };
 
-  const createDatabase = async function () {
+  const createDatabase = async function (applicationDatabaseName) {
     return new Promise(async (resolve, reject) => {
       const client = new Client({
-        connectionString: process.env.CREATE_DATABASE_URL
+        connectionString: process.env.CREATE_DATABASE_URL,
+        ...options
       });
       client.connect();
       // There is no CREATE DATABASE IF NOT EXISTS in postgres, which is decidedly annoying

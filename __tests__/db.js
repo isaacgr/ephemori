@@ -1,6 +1,11 @@
 const makeDb = require("../server/db");
 
-const database = makeDb("lifegrid");
+const database = makeDb({
+  ssl: {
+    require: true,
+    rejectUnauthorized: false
+  }
+});
 
 module.exports = {
   db: database.db,
