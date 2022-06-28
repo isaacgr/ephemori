@@ -1,16 +1,15 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="content-block content-block--flex footer-content">
-        <Link href="#" underline="none">
-          About
-        </Link>
         <Link href="/" underline="none">
           Home
+        </Link>
+        <Link href="/about" underline="none">
+          About
         </Link>
         <Link href="/contact" underline="none">
           Contact

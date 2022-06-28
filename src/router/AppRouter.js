@@ -31,6 +31,7 @@ import CookiePolicy from "../policy-pages/CookiePolicy";
 import Contact from "../pages/Contact";
 
 import Footer from "../components/Footer";
+import AboutSection from "../components/AboutSection";
 
 const AppRouter = () => {
   const [theme, setTheme] = useState("light");
@@ -42,6 +43,10 @@ const AppRouter = () => {
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route index exact path="/" element={<LandingPage />} />
+          <Route
+            path="/about"
+            element={<AboutSection divClass={"container"} />}
+          />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/contact" element={<Contact />} />
